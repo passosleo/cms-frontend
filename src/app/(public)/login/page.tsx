@@ -8,15 +8,25 @@ import { useLogin } from "./hooks/useLogin";
 import { CustomCheckbox } from "@/components/CustomCheckbox";
 
 export default function LoginPage() {
-  const { onSubmit, isLoading } = useLogin();
+  const { onSubmit, storedEmail, storedRememberMe, isLoading } = useLogin();
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <CustomForm zodSchema={loginSchema} onSubmit={onSubmit}>
+      <CustomForm
+        zodSchema={loginSchema}
+        useFormProps={{
+          defaultValues: {
+            email: storedEmail || "",
+            rememberMe: storedRememberMe,
+          },
+        }}
+        onSubmit={onSubmit}
+      >
         <CustomInput
           name="email"
           type="email"
           label="E-mail"
           placeholder="Insira seu e-mail"
+          disabled={isLoading}
           leftElement={<MailIcon size={18} />}
         />
         <CustomInput
@@ -24,6 +34,7 @@ export default function LoginPage() {
           type="password"
           label="Senha"
           placeholder="Insira sua senha"
+          disabled={isLoading}
           containerClassName="mb-2"
           leftElement={<LockIcon size={18} />}
         />

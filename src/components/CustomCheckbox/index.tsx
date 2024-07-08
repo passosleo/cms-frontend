@@ -4,6 +4,7 @@ import { ErrorHookForm, ErrorsHookForm } from "@/types/react-hook-form";
 import { Controller, RegisterOptions } from "react-hook-form";
 import { Checkbox } from "../ui/checkbox";
 import { iterateObject } from "@/utils/object";
+import { When } from "../When";
 
 type Props = {
   label: React.ReactNode;
@@ -12,6 +13,7 @@ type Props = {
   hideError?: boolean;
   rules?: RegisterOptions;
   defaultValue?: boolean;
+  disabled?: boolean;
   id?: string;
 };
 
@@ -22,6 +24,7 @@ export function CustomCheckbox({
   error,
   defaultValue,
   label,
+  disabled,
   ...props
 }: Props) {
   return (
@@ -41,22 +44,32 @@ export function CustomCheckbox({
             control={control}
             rules={rules}
             name={id}
-            render={({ field }) => (
+            disabled={disabled}
+            render={({ field: { onChange, value, ...fields } }) => (
               <div>
                 <div className="flex flex-row items-center gap-1">
-                  <Checkbox {...field} id={id} />
-                  <label htmlFor={id} className="text-sm cursor-pointer">
+                  <Checkbox
+                    id={id}
+                    onCheckedChange={onChange}
+                    checked={value}
+                    disabled={disabled}
+                    {...fields}
+                  />
+                  <label
+                    htmlFor={id}
+                    className="text-sm cursor-pointer select-none"
+                  >
                     {label}
                   </label>
                 </div>
                 <div className="h-4 pl-2">
-                  {!hideError && (hasError || error) && (
+                  <When condition={!hideError && (hasError || error)}>
                     <div data-testid="messageValidation">
                       <label className="text-red-500 text-xs">
                         {hasError?.message || error}
                       </label>
                     </div>
-                  )}
+                  </When>
                 </div>
               </div>
             )}

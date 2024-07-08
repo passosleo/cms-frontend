@@ -26,7 +26,7 @@ export function useCustomMutate<Payload = any, ReturnData = any>({
   setQueryKeys,
   axiosConfig = {},
   invalidateQueryKeys,
-  retry,
+  retry = 3,
   retryDelay = 1000,
   ...statusFunctions
 }: CustomMutationProps<ReturnData, Payload>) {

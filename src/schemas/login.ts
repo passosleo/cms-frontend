@@ -9,6 +9,7 @@ export const loginSchema = z.object({
     .email(email.isNotValid)
     .toLowerCase(),
   password: z.string({ required_error: isRequired }).min(8, password.min(8)),
+  rememberMe: z.boolean().optional(),
 });
 
 export type LoginSchemaType = z.infer<typeof loginSchema>;

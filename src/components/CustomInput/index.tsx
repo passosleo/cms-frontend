@@ -9,6 +9,7 @@ import { Input, InputProps as UIInputProps } from "../ui/input";
 import { iterateObject } from "@/utils/object";
 import { ErrorHookForm, ErrorsHookForm } from "@/types/react-hook-form";
 import { When } from "../When";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export type InputProps = UIInputProps & {
   label?: string;
@@ -38,13 +39,15 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
       leftElement,
       onLeftElementClick,
       onRightElementClick,
+      type: typeProp = "text",
       ...props
     },
     customRef
   ) => {
-    const { onKeyDown } = useCustomInput({
+    const { onKeyDown, type, handleShowPassword } = useCustomInput({
       preventEnterSubmit,
       onKeyDownProp,
+      typeProp,
     });
     return (
       <ConnectForm>
@@ -62,6 +65,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               control={control}
               rules={rules}
               name={id}
+              disabled={props.disabled}
               render={({ field: { ref, onChange, ...fields } }) => (
                 <div
                   className={twMerge(
@@ -78,10 +82,29 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
                   <Input
                     id={id}
                     ref={customRef || ref}
-                    rightElement={rightElement}
+                    rightElement={
+                      rightElement ? (
+                        rightElement
+                      ) : typeProp === "password" ? (
+                        type === "password" ? (
+                          <EyeOffIcon size={18} />
+                        ) : (
+                          <EyeIcon size={18} />
+                        )
+                      ) : (
+                        <></>
+                      )
+                    }
                     leftElement={leftElement}
+                    type={type}
                     onLeftElementClick={onLeftElementClick}
-                    onRightElementClick={onRightElementClick}
+                    onRightElementClick={() => {
+                      if (onRightElementClick) {
+                        onRightElementClick();
+                      } else if (typeProp === "password") {
+                        handleShowPassword();
+                      }
+                    }}
                     onKeyDown={onKeyDown}
                     onChange={(data) => {
                       if (props.onChange) props.onChange(data);

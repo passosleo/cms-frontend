@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 type Props = {
   onKeyDownProp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   preventEnterSubmit: boolean;
+  typeProp?: string;
 };
 
-export function useCustomInput({ preventEnterSubmit, onKeyDownProp }: Props) {
+export function useCustomInput({
+  preventEnterSubmit,
+  onKeyDownProp,
+  typeProp,
+}: Props) {
+  const [type, setType] = useState(typeProp);
+
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (preventEnterSubmit && event.key === "Enter") {
       event.preventDefault();
@@ -13,5 +20,9 @@ export function useCustomInput({ preventEnterSubmit, onKeyDownProp }: Props) {
     }
   }
 
-  return { onKeyDown };
+  function handleShowPassword() {
+    setType(type === "password" ? "text" : "password");
+  }
+
+  return { onKeyDown, type, handleShowPassword };
 }
