@@ -20,7 +20,7 @@ export type CustomMutationProps<ReturnData, Payload> = {
   }) => void;
 };
 
-export function useCustomMutate<ReturnData = any, Payload = any>({
+export function useCustomMutate<Payload = any, ReturnData = any>({
   routeName,
   notHandleError,
   setQueryKeys,

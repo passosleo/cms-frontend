@@ -1,7 +1,7 @@
 import type { AxiosError } from "axios";
 import { routes } from "./router";
 
-export type RouteName = keyof typeof routes | string;
+export type RouteName = keyof typeof routes;
 
 export type DefaultResponse<T> = {
   status: number;

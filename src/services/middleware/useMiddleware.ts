@@ -3,10 +3,9 @@ import { CustomAxiosError, Params, RouteName } from "../types";
 import { HOST, routes } from "../router";
 import { useCookies } from "@/hooks/useCookies";
 import { mountUrl } from "@/utils/url";
-import { useAuthContext } from "@/context/AuthContext";
 import { config } from "@/config";
 
-type RequestAxiosProps<PayloadType> = {
+export type RequestAxiosProps<PayloadType> = {
   config?: AxiosRequestConfig;
   routeName: RouteName;
   payload?: PayloadType;
@@ -32,9 +31,7 @@ export function useMiddleware() {
     params,
     query,
   }: RequestAxiosProps<PayloadType>) {
-    const { method, uri, listenHeaders } = routes[
-      routeName as keyof typeof routes
-    ] as {
+    const { method, uri, listenHeaders } = routes[routeName] as {
       listenHeaders?: string[];
       method: string;
       uri: string;

@@ -2,26 +2,16 @@
 import { CustomButton } from "@/components/CustomButton";
 import { CustomForm } from "@/components/CustomForm";
 import { CustomInput } from "@/components/CustomInput";
-import { useAuthContext } from "@/context/AuthContext";
 import { loginSchema } from "@/schemas/login";
-import { useCustomMutate } from "@/services/hooks/useCustomMutate";
 import { LockIcon, MailIcon } from "lucide-react";
-import { redirect } from "next/dist/server/api-utils";
+import { useLogin } from "./hooks/useLogin";
+import { CustomCheckbox } from "@/components/CustomCheckbox";
 
 export default function LoginPage() {
-  const { onAuthenticated } = useAuthContext();
-  const { mutate: login, isPending } = useCustomMutate({
-    routeName: "login",
-    setQueryKeys: ["login"],
-    invalidateQueryKeys: ["user"],
-    onSuccess: (res) => onAuthenticated(res?.data.token),
-  });
+  const { onSubmit, isLoading } = useLogin();
   return (
     <div className="flex items-center justify-center h-screen w-full">
-      <CustomForm
-        zodSchema={loginSchema}
-        onSubmit={(data) => login({ payload: data })}
-      >
+      <CustomForm zodSchema={loginSchema} onSubmit={onSubmit}>
         <CustomInput
           name="email"
           type="email"
@@ -34,9 +24,11 @@ export default function LoginPage() {
           type="password"
           label="Senha"
           placeholder="Insira sua senha"
+          containerClassName="mb-2"
           leftElement={<LockIcon size={18} />}
         />
-        <CustomButton type="submit" className="mt-5" isLoading={isPending}>
+        <CustomCheckbox name="rememberMe" label="Lembrar-me" />
+        <CustomButton type="submit" isLoading={isLoading}>
           Entrar
         </CustomButton>
       </CustomForm>
