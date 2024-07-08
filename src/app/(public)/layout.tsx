@@ -3,6 +3,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import { CustomLoading } from "../../components/CustomLoading";
 import { useRedirectTo } from "@/hooks/useRedirectTo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function PublicLayout({
   children,
@@ -26,6 +27,7 @@ export default function PublicLayout({
 
   return (
     <div className="flex">
+      <ThemeToggle className="absolute top-5 right-5" />
       <div className="flex w-[70%] items-center justify-center bg-black">
         <h1 className="text-white">CMS</h1>
       </div>

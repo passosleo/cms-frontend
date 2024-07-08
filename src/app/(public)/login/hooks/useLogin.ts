@@ -4,8 +4,8 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAuthContext } from "@/context/AuthContext";
 
 export function useLogin() {
-  const { onAuthenticated } = useAuthContext();
   const loginService = useLoginService();
+  const { onAuthenticated } = useAuthContext();
   const { storeData, deleteStoredData, getStoredData } = useLocalStorage();
   const storedEmail = getStoredData("email");
 
