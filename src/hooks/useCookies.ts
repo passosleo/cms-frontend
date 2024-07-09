@@ -1,12 +1,22 @@
 export function useCookies() {
-  function setCookie<T>(key: string, value: T, expirationDate: Date | null) {
+  function setCookie<T>(
+    key: string,
+    value: T,
+    expirationDate: Date | null = null,
+    path = "/"
+  ) {
     try {
       if (typeof document !== "undefined") {
-        let cookieString = `${key}=${encodeURIComponent(JSON.stringify(value))}`;
+        let cookieString = `${key}=${encodeURIComponent(
+          JSON.stringify(value)
+        )}`;
         if (expirationDate !== null) {
-          let cookieExpirationDate = new Date(expirationDate);  
-          cookieExpirationDate.setDate(cookieExpirationDate.getDate() + expirationDate.getDate());
+          let cookieExpirationDate = new Date(expirationDate);
+          cookieExpirationDate.setDate(
+            cookieExpirationDate.getDate() + expirationDate.getDate()
+          );
           cookieString += `; expires=${cookieExpirationDate.toUTCString()}`;
+          cookieString += `; path=${path}`;
         }
         document.cookie = cookieString;
         return true;
@@ -20,9 +30,11 @@ export function useCookies() {
   function getCookie<T>(key: string): T | null {
     try {
       if (typeof document !== "undefined") {
-        const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+        const cookies = document.cookie
+          .split(";")
+          .map((cookie) => cookie.trim());
         for (const cookie of cookies) {
-          const [cookieKey, cookieValue] = cookie.split('=');
+          const [cookieKey, cookieValue] = cookie.split("=");
           if (cookieKey === key) {
             return JSON.parse(decodeURIComponent(cookieValue));
           }
