@@ -57,7 +57,9 @@ export function CustomCheckbox({
                   />
                   <label
                     htmlFor={id}
-                    className="text-sm cursor-pointer select-none"
+                    className={`text-sm select-none ${
+                      disabled ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                   >
                     {label}
                   </label>

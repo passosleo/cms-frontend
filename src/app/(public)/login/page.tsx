@@ -3,9 +3,10 @@ import { CustomButton } from "@/components/CustomButton";
 import { CustomForm } from "@/components/CustomForm";
 import { CustomInput } from "@/components/CustomInput";
 import { loginSchema } from "@/schemas/login";
-import { LockIcon, MailIcon } from "lucide-react";
+import { FacebookIcon, LinkedinIcon, LockIcon, MailIcon } from "lucide-react";
 import { useLogin } from "./hooks/useLogin";
 import { CustomCheckbox } from "@/components/CustomCheckbox";
+import Link from "next/link";
 
 export default function LoginPage() {
   const { onSubmit, storedEmail, storedRememberMe, isLoading } = useLogin();
@@ -35,10 +36,25 @@ export default function LoginPage() {
           label="Senha"
           placeholder="Insira sua senha"
           disabled={isLoading}
-          containerClassName="mb-2"
           leftElement={<LockIcon size={18} />}
         />
-        <CustomCheckbox name="rememberMe" label="Lembrar-me" />
+        <CustomCheckbox
+          name="rememberMe"
+          label="Lembrar-me"
+          disabled={isLoading}
+        />
+        <div className="flex gap-2 items-center justify-center mb-2">
+          <Link href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77vkfuzgwhw5rn&redirect_uri=http://localhost:3000/login/callback?provider=linkedin&state=foobar&scope=openid%20email%20profile">
+            <CustomButton variant="outline" size="icon" disabled={isLoading}>
+              <LinkedinIcon />
+            </CustomButton>
+          </Link>
+          <Link href="https://www.facebook.com/v20.0/dialog/oauth?client_id=985096126442471&redirect_uri=http://localhost:3000/login/callback?provider=facebook&state=123&scope=email">
+            <CustomButton variant="outline" size="icon" disabled={isLoading}>
+              <FacebookIcon />
+            </CustomButton>
+          </Link>
+        </div>
         <CustomButton type="submit" isLoading={isLoading}>
           Entrar
         </CustomButton>

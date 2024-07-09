@@ -98,13 +98,13 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
                     leftElement={leftElement}
                     type={type}
                     onLeftElementClick={onLeftElementClick}
-                    onRightElementClick={() => {
-                      if (onRightElementClick) {
-                        onRightElementClick();
-                      } else if (typeProp === "password") {
-                        handleShowPassword();
-                      }
-                    }}
+                    onRightElementClick={
+                      onRightElementClick
+                        ? onRightElementClick
+                        : typeProp === "password"
+                        ? handleShowPassword
+                        : undefined
+                    }
                     onKeyDown={onKeyDown}
                     onChange={(data) => {
                       if (props.onChange) props.onChange(data);

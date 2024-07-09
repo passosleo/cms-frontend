@@ -1,8 +1,8 @@
 import { useCustomMutate } from "@/services/hooks/useCustomMutate";
-import { LoginRequest, LoginResponse } from "../types";
+import { LoginCredentialsRequest, LoginResponse } from "../types";
 
 export function useLoginService() {
-  const service = useCustomMutate<LoginRequest, LoginResponse>({
+  const service = useCustomMutate<LoginCredentialsRequest, LoginResponse>({
     routeName: "login",
     setQueryKeys: ["login"],
     invalidateQueryKeys: ["user-info"],

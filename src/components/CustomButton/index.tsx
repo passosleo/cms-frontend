@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { Button, ButtonProps } from "../ui/button";
-import { CustomLoader } from "../CustomLoader";
 import { When } from "../When";
+import { LoaderCircle } from "lucide-react";
 
 type CustomButtonProps = ButtonProps & {
   rightIcon?: React.ReactNode;
@@ -20,7 +20,7 @@ export function CustomButton({
   return (
     <Button className={twMerge(className)} {...props}>
       <When condition={isLoading}>
-        <CustomLoader className="text-white " />
+        <LoaderCircle className="animate-spin" />
       </When>
       <When condition={!isLoading}>
         {leftIcon && <span className="mr-2">{leftIcon}</span>}

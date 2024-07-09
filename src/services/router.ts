@@ -5,6 +5,10 @@ const routes = {
     method: "POST",
     uri: "/api/v1/login",
   },
+  loginOAuth2: {
+    method: "POST",
+    uri: "/api/v1/login/:provider",
+  },
   getUserInfo: {
     method: "GET",
     uri: "/api/v1/user/info",
