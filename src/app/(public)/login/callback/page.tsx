@@ -5,12 +5,11 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { LoginOAuth2Request, LoginResponse } from "../types";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { useQueryParams } from "../../../../hooks/useQueryParams";
 
 export default function LoginCallbackPage() {
   const { onAuthenticated } = useAuthContext();
-  const searchParams = useSearchParams();
-  const provider = searchParams.get("provider");
-  const code = searchParams.get("code");
+  const [provider, code] = useQueryParams(["provider", "code"]);
   const pathname = usePathname();
   const redirectUri =
     window.location.origin + pathname + `?provider=${provider}`;
